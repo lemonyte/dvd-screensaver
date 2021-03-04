@@ -74,7 +74,7 @@ def ResourcePath(relativePath):
     return os.path.join(basePath, relativePath)
 
 workingDir = Path(ResourcePath("dvd-screensaver.py")).parent
-projectDir = Path(os.getcwd()).parent
+projectDir = Path(os.getcwd())
 
 user32 = ctypes.windll.user32
 displaySize = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
