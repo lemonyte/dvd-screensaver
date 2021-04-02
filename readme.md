@@ -7,12 +7,12 @@ Website: https://repl.it/talk/learn/A-Starter-Guide-to-Pygame/11741
 Images from Google Images and the example project.
 ## Requirements
 * Windows operating system
-* 25 MB of free space if you are using the EXE or SCR file
-* 85 MB of free space for temporary files if you are using the EXE or SCR file
+* 25 MB of free space if you are using the `.exe` or `.scr` file
+* 85 MB of free space for temporary files if you are using the `.exe` or `.scr` file
 ## Usage
 ### `.exe` File
 Download the `dvd-screensaver.exe` file from the `dist` directory and run it from any directory of your choice.
-The EXE file is only dependent on temporary files it creates which get deleted when the program exits.
+The `.exe` file is only dependent on temporary files it creates which get deleted when the program exits.
 You may safely delete all other files that you downloaded.
 ### `.scr` File
 Make sure you have administrator permissions on your pc.
@@ -22,8 +22,8 @@ In the screensaver settings menu select "dvd-screensaver".
 ### `.py` File
 #### Requirements
 * Python 3.9 or higher
-* Pygame `pip install pygame`
-* Pillow `pip install pillow`
+* [pygame](https://pypi.org/project/pygame/) `pip install pygame`
+* [Pillow](https://pypi.org/project/Pillow/) `pip install Pillow`
 #### Executing
 Locate the file `dvd-screensaver.py` and double click to run it in the Python interpreter.  
 To run the Python script only the `dvd-screensaver` subdirectory is needed.  

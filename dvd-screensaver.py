@@ -6,6 +6,7 @@
 # Images from Google Images and the example project
 # License: MIT License https://choosealicense.com/licenses/mit/
 """
+#----------------------------------------------------------------------#
 # Customization Settings
 
 # Number of items bouncing around on screen.
@@ -45,7 +46,7 @@ speedType = ["constant", 1, 1]
 width, height = 1920, 1080
 #----------------------------------------------------------------------#
 
-import sys, os , time, random, ctypes, getopt, winreg
+import sys, os , time, random, ctypes
 
 def disablePrint():
     sys.stdout = open(os.devnull, "w")
@@ -88,7 +89,6 @@ imageSize[1] = imageSize[1]/1080*displaySize[1]
 class logo:
     def __init__(self):
         global imageType
-
         if speedType[0] == "random":
             self.imageSpeed = [random.randrange(speedType[1], speedType[2]) / 1.0, random.randrange(speedType[1], speedType[2]) / 1.0]
 
@@ -132,7 +132,6 @@ class logo:
             image.convert("RGBA")
             pixelData = image.getdata()
             nextColor = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255), 255)
-
             for item in pixelData:
                 if item[3] != 0:
                     newPixelData.append(nextColor)
@@ -167,7 +166,6 @@ clock = pygame.time.Clock()
 pygame.mouse.set_visible(False)
 screen = pygame.display.set_mode(displaySize)
 logos = []
-
 for item in range(0, numberOfImages):
     logos.append(logo())
 
@@ -178,7 +176,6 @@ while True:
             sys.exit(0)
 
     screen.fill(backgroundColor)
-
     for item in logos:
         item.DrawImage(screen)
         item.MoveImage()
