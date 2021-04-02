@@ -21,7 +21,7 @@ Right click on it and select "Install"
 In the screensaver settings menu select "dvd-screensaver".
 ### `.py` File
 #### Requirements
-* Python 3.9 or higher
+* [Python 3.9](https://www.python.org/downloads/) or higher
 * [pygame](https://pypi.org/project/pygame/) `pip install pygame`
 * [Pillow](https://pypi.org/project/Pillow/) `pip install Pillow`
 #### Executing
