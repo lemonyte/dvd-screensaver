@@ -1,11 +1,3 @@
-"""
-# Credit
-# Example project from repl.it
-# Author: Edwin Kofler (eankeen)
-# Website: https://repl.it/talk/learn/A-Starter-Guide-to-Pygame/11741
-# Images from Google Images and the example project
-# License: MIT License https://choosealicense.com/licenses/mit/
-"""
 #----------------------------------------------------------------------#
 # Customization Settings
 
