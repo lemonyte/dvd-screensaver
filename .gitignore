@@ -1,0 +1,8 @@
+.vscode/
+__pycache__/
+[Bb]uild/
+[Oo]ther/
+[Dd]ist/
+*env*
+images/current-image/
+*.json

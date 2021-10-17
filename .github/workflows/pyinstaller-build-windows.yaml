@@ -1,0 +1,46 @@
+name: PyInstaller Build Windows
+
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+    tags: ['v*']
+
+jobs:
+  build:
+    name: Build Release
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set Up Python Environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip wheel setuptools pyinstaller
+        (test -f requirements.txt && pip install -r requirements.txt) || echo "'requirements.txt' does not exist, skipping dependency installation"
+
+    - name: Install UPX
+      run: |
+        Invoke-WebRequest https://github.com/upx/upx/releases/download/v3.96/upx-3.96-win64.zip -OutFile ./upx-3.96-win64.zip
+        Expand-Archive -Path upx-3.96-win64.zip -DestinationPath .
+        Move-Item -Path upx-3.96-win64/upx.* -Destination .
+
+    - name: Build Windows Executable
+      run: |
+        pyinstaller --clean -y --dist ./dist/windows --upx-dir . build.spec
+
+    - name: Create SCR File
+      run: |
+        Copy-Item ./dist/windows/dvd-screensaver.exe -Destination ./dist/windows/dvd-screensaver.scr
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          ./dist/windows/*.exe
+          ./dist/windows/*.scr
