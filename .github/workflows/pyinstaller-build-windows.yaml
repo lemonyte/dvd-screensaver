@@ -25,12 +25,6 @@ jobs:
         python -m pip install --upgrade pip wheel setuptools pyinstaller
         (test -f requirements.txt && pip install -r requirements.txt) || echo "'requirements.txt' does not exist, skipping dependency installation"
 
-    # temporary
-    - name: print python version
-      run: |
-        python --version
-        where.exe pyinstaller
-
     - name: Install UPX
       run: |
         Invoke-WebRequest https://github.com/upx/upx/releases/download/v3.96/upx-3.96-win64.zip -OutFile ./upx-3.96-win64.zip
@@ -55,12 +49,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip wheel setuptools pyinstaller
         (test -f requirements.txt && pip install -r requirements.txt) || echo "'requirements.txt' does not exist, skipping dependency installation"
-
-    # temporary
-    - name: print python version (x86)
-      run: |
-        python --version
-        where.exe pyinstaller
 
     - name: Build Windows Executable (x86)
       run: |

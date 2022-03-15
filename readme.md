@@ -2,19 +2,15 @@
 By [LemonPi314](https://github.com/LemonPi314)
 
 Bouncing DVD logo screensaver for Windows.
-## Credit
-Example project by Edwin Kofler (eankeen) from https://repl.it/talk/learn/A-Starter-Guide-to-Pygame/  
-Images from Google Images and the example project
 ## Requirements
 - Windows operating system
 - 15 MB of free space if you are using the `.exe` or `.scr` file
 - 17 MB of free space for temporary files if you are using the `.exe` or `.scr` file
 ## Usage
-### `.exe` File
-Download the `dvd-screensaver.exe` file from the [latest release](https://github.com/LemonPi314/dvd-screensaver/releases/latest) and run it from any directory with this command: `./dvd-screensaver.exe -s`. The `.exe` file is only dependent on temporary files it creates which get deleted when the program exits.
 ### `.scr` File
-Make sure you have administrator permissions on your PC.
-Download the screensaver file `dvd-screensaver.scr` from the [latest release](https://github.com/LemonPi314/dvd-screensaver/releases/latest) and move it to `C:\Windows\System32`. Right click on it and select "Install". In the screensaver settings menu select "dvd-screensaver".
+Download the `dvd-screensaver.scr` file from the [latest release](https://github.com/LemonPi314/dvd-screensaver/releases/latest) and optionally move it to a user folder like `%APPDATA%/LemonPi314/dvd-screensaver`. Right click on it and select "Install". In the screensaver settings menu select "dvd-screensaver". Moving the file to the `System32` folder is known to cause issues with x86 builds.
+### `.exe` File
+Download the `dvd-screensaver.exe` file from the [latest release](https://github.com/LemonPi314/dvd-screensaver/releases/latest) and run it from file's directory with this command: `./dvd-screensaver.exe -s`. The `.exe` file is only dependent on temporary files it creates which get deleted when the program exits. This file is identical to `dvd-screensaver.scr` with the only difference being the file extension.
 ### `.py` File
 #### Requirements
 - [Python 3.9](https://www.python.org/downloads/) or higher
@@ -42,15 +38,21 @@ To open the configuration menu run the Python script, `.exe` file, or `.scr` fil
 Option|Description
 ------|-----------
 Number of images|Number of items bouncing around on screen
-Image style|Style of image, can be either '1' or '2'
+Image style|Style of image, can be either `1` or `2`
 Refresh speed|Refresh speed of the display loop in updates per second. Values higher than 120 may cause it to not function properly
 Image width, height|The maximum width and height of the image in pixels
-Image speed type|Speed type, can be 'random' or 'constant'
-Image speed x, y|If the speed type is set to 'constant' the integers are the x and y speed of the image in pixels. If the speed type is set to 'random' the integers are the range for the speed to be chosen from
-Image color type|Color type, can be 'preset', 'random', or 'constant'
-Image red, green, blue, alpha|RGBA value for the image(s) if the color type is set to 'constant'
+Image speed type|Speed type, can be `random` or `constant`
+Image speed x, y|If the speed type is set to `constant` the integers are the x and y speed of the image in pixels. If the speed type is set to `random` the integers are the range for the speed to be chosen from
+Image color type|Color type, can be `preset`, `random`, or `constant`
+Image red, green, blue, alpha|RGBA value for the image(s) if the color type is set to `constant`
 Invert transparency|Transparency inversion, colored areas of the image become clear and vice versa
 Background red, green, blue|RGB color of the background
 
+## Known Issues
+- PC won't enter sleep mode if the screensaver is running
+
+## Credit
+Example project by Edwin Kofler (eankeen) on [repl.it](https://repl.it/talk/learn/A-Starter-Guide-to-Pygame/)  
+Images from Google Images and the example project
 ## License
 [MIT License](https://choosealicense.com/licenses/mit/)
