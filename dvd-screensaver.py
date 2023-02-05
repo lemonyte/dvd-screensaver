@@ -44,7 +44,7 @@ speed = [2, 2]
 display_width, display_height = 1920, 1080
 
 # Path to the config file
-config_file_path = r'%APPDATA%/LemonPi314/dvd-screensaver/config.json'
+config_file_path = r'%APPDATA%/lemonyte/dvd-screensaver/config.json'
 #----------------------------------------------------------------------#
 
 import sys
