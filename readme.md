@@ -2,6 +2,8 @@
 
 Bouncing DVD logo screen saver for Windows in Rust 🦀
 
+![dvdlogo](https://github.com/user-attachments/assets/0d8dead3-dbd4-497b-bcdc-4b5e91cf0d49)
+
 ## Installation
 
 1. Download the `dvd-screensaver.scr` file from the [latest release](https://github.com/lemonyte/dvd-screensaver/releases/latest)
