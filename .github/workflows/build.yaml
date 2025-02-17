@@ -1,0 +1,72 @@
+name: Build Windows screen saver
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build executable
+    runs-on: windows-latest
+    env:
+      NAME: dvd-screensaver
+      TARGET: x86_64-pc-windows-msvc
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cargo cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ./target
+          key: build-cargo-registry-${{ env.TARGET }}
+
+      - name: Install Rust target ${{ env.TARGET }}
+        run: rustup target add $TARGET
+
+      - name: Build release
+        run: cargo build --release --verbose --target $TARGET
+
+      - name: Move executable
+        run: |
+          mkdir -p ./artifacts
+          mv ./target/$TARGET/release/$NAME.exe ./artifacts/$NAME.scr
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: executables
+          path: |
+            ./artifacts
+
+  release:
+    name: Create release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: executables
+          path: ./artifacts
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./artifacts/*
