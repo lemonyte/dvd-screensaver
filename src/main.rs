@@ -1,110 +1,63 @@
-use nannou::image;
-use nannou::image::{DynamicImage, GenericImageView};
-use nannou::prelude::*;
-use nannou::rand::{thread_rng, Rng};
-use std::env;
-use std::process::exit;
+//! Renders a 2D scene containing a single, moving sprite.
 
-struct Model {
-    image: DynamicImage,
-    dvd_rect: Rect,
-    dvd_vel: Vec2,
-    m_pos: Option<Vec2>,
+use bevy::asset::embedded_asset;
+use bevy::prelude::*;
+use bevy::window::WindowMode;
+
+struct EmbeddedAssetPlugin;
+
+impl Plugin for EmbeddedAssetPlugin {
+    fn build(&self, app: &mut App) {
+        embedded_asset!(app, "assets/dvd_logo.png");
+    }
+}
+
+#[derive(Component)]
+enum Direction {
+    Up,
+    Down,
 }
 
 fn main() {
-    let flag = env::args().nth(1).unwrap_or_default();
-    if flag.starts_with("/c") || flag.starts_with("/p") {
-        println!("Configuration menu and in-window preview are not implemented");
-        exit(0);
-    }
-    nannou::app(model).update(update).run();
+    App::new()
+        .add_plugins((
+            DefaultPlugins.set(WindowPlugin {
+                primary_window: Some(Window {
+                    resizable: false,
+                    position: WindowPosition::Automatic,
+                    mode: WindowMode::Fullscreen(MonitorSelection::Primary),
+                    visible: true,
+                    ..default()
+                }),
+                ..default()
+            }),
+            EmbeddedAssetPlugin,
+        ))
+        .add_systems(Startup, setup)
+        .add_systems(Update, sprite_movement)
+        .run();
 }
 
-fn change_color(image: &DynamicImage) -> DynamicImage {
-    image.huerotate(thread_rng().gen_range(120..240))
-}
-
-fn model(app: &App) -> Model {
-    let primary_window_id = app
-        .new_window()
-        .event(window_event)
-        .view(view)
-        .fullscreen()
-        .build()
-        .unwrap();
-
-    let primary_window = app.window(primary_window_id).unwrap();
-    primary_window.set_cursor_visible(false);
-
-    let img_data = include_bytes!("../assets/dvd_logo.png");
-    let image = change_color(&image::load_from_memory(img_data).unwrap().thumbnail(
-        app.window_rect().w() as u32 / 6,
-        app.window_rect().h() as u32 / 6,
+fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands.spawn(Camera2d);
+    commands.spawn((
+        Sprite::from_image(asset_server.load("embedded://dvd_screensaver/assets/dvd_logo.png")),
+        Transform::from_xyz(100.0, 0.0, 0.0),
+        Direction::Up,
     ));
-    let rect = Rect::from_x_y_w_h(
-        0.0,
-        0.0,
-        image.dimensions().0 as f32,
-        image.dimensions().1 as f32,
-    );
-
-    Model {
-        image,
-        dvd_rect: rect,
-        // Velocity is in pixels per second.
-        dvd_vel: Vec2::new(50.0, 50.0),
-        m_pos: None,
-    }
 }
 
-fn window_event(app: &App, model: &mut Model, event: WindowEvent) {
-    if app.time > 0.1 {
-        match event {
-            WindowEvent::MouseMoved(pos) => {
-                if model.m_pos.is_none() {
-                    model.m_pos = Some(pos);
-                }
-                if model.m_pos.unwrap() != pos {
-                    app.quit();
-                }
-            }
-            WindowEvent::MousePressed(..)
-            | WindowEvent::KeyPressed(..)
-            | WindowEvent::MouseWheel(..) => app.quit(),
-            _ => (),
+fn sprite_movement(time: Res<Time>, mut sprite_position: Query<(&mut Direction, &mut Transform)>) {
+    for (mut logo, mut transform) in &mut sprite_position {
+        match *logo {
+            Direction::Up => transform.translation.y += 150.0 * time.delta_secs(),
+            Direction::Down => transform.translation.y -= 150.0 * time.delta_secs(),
+        }
+
+        if transform.translation.y > 200.0 {
+            *logo = Direction::Down;
+        } else if transform.translation.y < -200.0 {
+            *logo = Direction::Up;
         }
     }
-}
-
-fn update(app: &App, model: &mut Model, _update: Update) {
-    let win = app.window_rect();
-    let delta_time = app.duration.since_prev_update.secs() as f32;
-    let dvd_vel = &mut model.dvd_vel;
-
-    model.dvd_rect = model
-        .dvd_rect
-        .shift_x(dvd_vel.x * delta_time)
-        .shift_y(dvd_vel.y * delta_time);
-
-    if model.dvd_rect.left() <= win.left() || model.dvd_rect.right() >= win.right() {
-        dvd_vel.x = -dvd_vel.x;
-        model.image = change_color(&model.image);
-    }
-    if model.dvd_rect.bottom() <= win.bottom() || model.dvd_rect.top() >= win.top() {
-        dvd_vel.y = -dvd_vel.y;
-        model.image = change_color(&model.image);
-    }
-}
-
-fn view(app: &App, model: &Model, frame: Frame) {
-    let draw = app.draw();
-    let texture = wgpu::Texture::from_image(app, &model.image);
-
-    draw.texture(&texture)
-        .xy(model.dvd_rect.xy())
-        .wh(model.dvd_rect.wh());
-
-    frame.clear(BLACK);
-    draw.to_frame(app, &frame).unwrap();
 }
