@@ -2,6 +2,8 @@ name: Build Windows screen saver
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 concurrency:
