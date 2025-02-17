@@ -1,26 +1,28 @@
-# DVD Screensaver
+# DVD Screen Saver
 
-Bouncing DVD logo screensaver in Rust.
+Bouncing DVD logo screen saver for Windows in Rust 🦀
 
-**README is a work in progress.**
+## Installation
 
-## Usage
+1. Download the `dvd-screensaver.scr` file from the [latest release](https://github.com/lemonyte/dvd-screensaver/releases/latest)
+2. Right-click the file and select "Install"
+3. In the screen saver settings menu select "dvd-screensaver"
 
-### `.scr` File
+You can also clone the repository and build the project for your platform with `cargo build --release`.
 
-Download the `dvd-screensaver.scr` file from the [latest release](https://github.com/lemonyte/dvd-screensaver/releases/latest) and optionally move it to a user folder like `%APPDATA%/lemonyte/dvd-screensaver`. Right click on it and select "Install". In the screensaver settings menu select "dvd-screensaver". Moving the file to the `System32` folder is known to cause issues with x86 builds.
+## Features
 
-### Configuration
+- Bouncing DVD logo
+- It could hit the corner if you look at it long enough
 
-To open the configuration menu run the Python script, `.exe` file, or `.scr` file without the `-s` argument. The `-s` argument is required to run the screensaver without opening the configuration menu, see the [Microsoft Docs](https://docs.microsoft.com/en-us/troubleshoot/windows/win32/screen-saver-command-line) for more details. The configuration JSON file is saved in `%APPDATA%/lemonyte/dvd-screensaver/config.json`.
+## Planned features
 
-## Building
+- Configurable logo image
+- Retro screen effects
 
-WIP
+## Where is the Python version?
 
-## Known Issues
-
-- PC won't enter sleep mode if the screensaver is running
+See the [v1 release](https://github.com/lemonyte/dvd-screensaver/releases/tag/v1.0.1) for the Python version and 32-bit Windows support.
 
 ## License
 
