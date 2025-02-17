@@ -2,6 +2,8 @@ use nannou::image;
 use nannou::image::{DynamicImage, GenericImageView};
 use nannou::prelude::*;
 use nannou::rand::{thread_rng, Rng};
+use std::env;
+use std::process::exit;
 
 struct Model {
     image: DynamicImage,
@@ -11,6 +13,11 @@ struct Model {
 }
 
 fn main() {
+    let flag = env::args().nth(1).unwrap_or_default();
+    if flag.starts_with("/c") || flag.starts_with("/p") {
+        println!("Configuration menu and in-window preview are not implemented");
+        exit(0);
+    }
     nannou::app(model).update(update).run();
 }
 
