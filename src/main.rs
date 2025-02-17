@@ -1,10 +1,10 @@
 use nannou::image;
-use nannou::image::GenericImageView;
+use nannou::image::{DynamicImage, GenericImageView};
 use nannou::prelude::*;
 use nannou::rand::{thread_rng, Rng};
 
 struct Model {
-    image: image::DynamicImage,
+    image: DynamicImage,
     dvd_rect: Rect,
     dvd_vel: Vec2,
     m_pos: Option<Vec2>,
@@ -14,7 +14,7 @@ fn main() {
     nannou::app(model).update(update).run();
 }
 
-fn change_color(image: &image::DynamicImage) -> image::DynamicImage {
+fn change_color(image: &DynamicImage) -> DynamicImage {
     image.huerotate(thread_rng().gen_range(120..240))
 }
 
@@ -56,15 +56,15 @@ fn window_event(app: &App, model: &mut Model, event: WindowEvent) {
         match event {
             WindowEvent::MouseMoved(pos) => {
                 if model.m_pos.is_none() {
-                    model.m_pos = Some(pos)
+                    model.m_pos = Some(pos);
                 }
                 if model.m_pos.unwrap() != pos {
-                    app.quit()
+                    app.quit();
                 }
             }
-            WindowEvent::MousePressed(..) => app.quit(),
-            WindowEvent::KeyPressed(..) => app.quit(),
-            WindowEvent::MouseWheel(..) => app.quit(),
+            WindowEvent::MousePressed(..)
+            | WindowEvent::KeyPressed(..)
+            | WindowEvent::MouseWheel(..) => app.quit(),
             _ => (),
         }
     }
@@ -74,6 +74,7 @@ fn update(app: &App, model: &mut Model, _update: Update) {
     let win = app.window_rect();
     let delta_time = app.duration.since_prev_update.secs() as f32;
     let dvd_vel = &mut model.dvd_vel;
+
     model.dvd_rect = model
         .dvd_rect
         .shift_x(dvd_vel.x * delta_time)
