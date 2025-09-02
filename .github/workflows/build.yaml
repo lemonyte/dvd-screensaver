@@ -20,7 +20,7 @@ jobs:
       TARGET: x86_64-pc-windows-msvc
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Cargo cache
         uses: actions/cache@v4
