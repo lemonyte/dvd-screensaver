@@ -42,7 +42,7 @@ jobs:
           mv ./target/$TARGET/release/$NAME.exe ./artifacts/$NAME.scr
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: executables
           path: |
