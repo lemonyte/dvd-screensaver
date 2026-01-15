@@ -4,8 +4,19 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      minor:
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      actions:
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"
