@@ -10,6 +10,9 @@ Bouncing DVD logo screen saver for Windows in Rust 🦀
 2. Right-click the file and select "Install"
 3. In the screen saver settings menu select "dvd-screensaver"
 
+> [!NOTE]
+> Configuration menu and in-window preview are not implemented. Clicking "Preview" will do nothing.
+
 You can also clone the repository and build the project for your platform with `cargo build --release`.
 
 ## Features
